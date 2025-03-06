@@ -166,6 +166,7 @@
             flex-direction: column;
             height: 100%;
             padding: 1.5rem;
+            justify-content: space-between;
         }
 
         .project-info h3 {
@@ -228,41 +229,54 @@
 
         .project-features, .project-tech-stack {
             display: flex;
-            align-items: flex-start;
+            flex-direction: column;
             margin-bottom: 1rem;
         }
 
         .project-features h4, .project-tech-stack h4 {
-            min-width: 120px; /* Fixed width for headers */
-            margin-right: 15px;
+            margin-bottom: 0.5rem;
             font-size: 1rem;
-            flex-shrink: 0;
         }
 
         .project-features ul, .project-tech-stack p {
             margin: 0;
             padding: 0;
             list-style: none;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .project-features ul li {
-            display: block;
+        .project-features ul li .project-tech-stack p{
             margin-bottom: 0.25rem;
         }
 
         .skills {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .skill-category {
+            flex: 1 1 30%; /* Adjust width for uniform spacing */
+            min-width: 250px; /* Ensures smaller screens stack properly */
+            margin-bottom: 20px;
         }
 
         .skill-category h3 {
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .skill-category h3::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: blue;
+            margin-top: 4px;
         }
 
         .skill-list {
@@ -278,14 +292,28 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 40px;
+            margin-top: 40px;
         }
 
         .social-links a {
             color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
+        }
+
+        .social-item img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .social-item:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+        .icon {
+            margin: 0 15px;
         }
 
         @media (max-width: 768px) {
@@ -322,7 +350,8 @@
                     <h2>Software Developer | Problem Solver | Tech Innovator</h2>
                     <div class="cta-buttons">
                         <a href="#projects" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                        <!-- <a href="#contact" class="btn btn-secondary">Contact Me</a> -->
+                        <a href="/static/karim_5yResume.pdf" class="btn btn-secondary">Download Resume</a>
                     </div>
                 </div>
             </div>
@@ -332,12 +361,14 @@
             <div class="container">
                 <h2 class="section-title">About Me</h2>
                 <p style="max-width: 800px; margin: 0 auto; text-align: center;">
-                    A passionate software developer with expertise in creating efficient and scalable web applications. 
-                    I transform complex problems into elegant, user-friendly solutions. With a strong background in 
-                    [Your Primary Technologies], I'm committed to delivering high-quality software that drives innovation.
+                    A passionate software developer with expertise in creating 
+                    <strong>efficient and scalable web applications</strong>. <br>
+                    I transform complex problems into <strong>elegant, user-friendly solutions</strong>. <br>
+                    With a strong background in <strong>Python, Django, Django Rest Framework, FastAPI, AWS, PostgreSQL, MySQL</strong>, <br>
+                    I'm committed to delivering <strong>high-quality software</strong> that drives innovation.
                 </p>
             </div>
-        </section>
+        </section>        
 
         <section id="projects" class="section">
             <div class="container">
@@ -492,14 +523,26 @@
                     <p>Interested in collaborating or have a project in mind?</p>
                     <div class="cta-buttons" style="justify-content: center; margin-top: 20px;">
                         <a href="mailto:tech.karim2@gmail.com" class="btn btn-primary">Email Me</a>
-                        <a href="karim_5yResume.pdf" class="btn btn-secondary">Download Resume</a>
+                    </div>
+        
+                    <!-- Social Links -->
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/s-karim-155019211/" target="_blank" class="social-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" class="icon" width="40px" alt="LinkedIn">
+                        </a>
+                        <a href="https://github.com/karimbasha325" target="_blank" class="social-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="icon" width="40px" alt="GitHub">
+                        </a>
+                        <a href="https://leetcode.com/u/s_karim/" target="_blank" class="social-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/LeetCode_logo_white_no_text.svg" class="icon" width="40px" alt="LeetCode">
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
+        </section>        
     </main>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Karim. All Rights Reserved.</p>
             <div class="social-links">
@@ -507,6 +550,6 @@
                 <a href="https://github.com/karimbasha325">GitHub</a>
             </div>
         </div>
-    </footer>
+    </footer> -->
 </body>
 </html>
