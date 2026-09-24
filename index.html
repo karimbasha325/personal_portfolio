@@ -15,6 +15,10 @@
             --light-gray: #f5f5f7;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -275,6 +279,11 @@
             flex: 1 1 30%; /* Adjust width for uniform spacing */
             min-width: 250px; /* Ensures smaller screens stack properly */
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
         }
 
         .skill-category h3 {
@@ -295,6 +304,78 @@
 
         .skill-list {
             list-style: none;
+        }
+
+        .certifications {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .certification-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 32px;
+            background-color: white;
+            border: 1px solid #e5e5e7;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 28px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 113, 227, 0.35);
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.12);
+        }
+
+        .credential-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 72px;
+            width: 72px;
+            height: 72px;
+            border: 1px solid #d8d8dc;
+            border-radius: 50%;
+            color: var(--text-color);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .credential-mark img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .certification-content {
+            flex: 1;
+        }
+
+        .certification-content h3 {
+            margin-bottom: 6px;
+            font-size: 1.35rem;
+        }
+
+        .certification-issuer,
+        .certification-type {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .certification-description {
+            margin: 16px 0;
+        }
+
+        .certification-skills {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .certification-action {
+            flex: 0 0 auto;
         }
 
         .footer {
@@ -352,6 +433,21 @@
             .nav-links {
                 display: none;
             }
+
+            .certification-card {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 24px;
+            }
+
+            .certification-action {
+                width: 100%;
+            }
+
+            .certification-action .btn {
+                text-align: center;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -366,6 +462,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#skills">Skills</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -468,7 +565,7 @@
                                 <p>Python, FastAPI, MySQL, AWS</p>
                             </div>
                             <div class="project-links">
-                                <a href="https://wfm.ptw.com/" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                                <a href="https://wfm.ptw.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
                             </div>
                         </div>
                     </div>
@@ -504,7 +601,7 @@
                                 <p>Python, Django, Django REST Framework, PostgreSQL, Pandas, React, AWS, GitHub</p>
                             </div>
                             <div class="project-links">
-                                <a href="https://www.tijorifinance.com/in/portfolio/" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                                <a href="https://www.tijorifinance.com/in/portfolio/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
                             </div>
                         </div>
                     </div>
@@ -540,7 +637,7 @@
                                 <p>Python, Django, PostgreSQL</p>
                             </div>
                             <div class="project-links">
-                                <a href="https://www.site.sa/en/products/site_postal" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                                <a href="https://www.site.sa/en/products/site_postal" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
                             </div>
                         </div>
                     </div>
@@ -600,6 +697,46 @@
                             <li>Postman</li>
                         </ul>
                     </div>
+                    <div class="skill-category">
+                        <h3>AI Engineering </h3>
+                        <ul class="skill-list">
+                            <li>Generative AI (GenAI)</li>
+                            <li>Agentic AI &amp; AI Agents</li>
+                            <li>Model Context Protocol (MCP)</li>
+                            <li>Retrieval-Augmented Generation (RAG)</li>
+                            <li>Large Language Models (LLMs)</li>
+                            <li>Prompt Engineering</li>
+                            <li>LLM Tool Calling &amp; Function Calling</li>
+                            <li>LangChain</li>
+                            <li>Claude API</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="section">
+            <div class="container">
+                <h2 class="section-title">Certifications</h2>
+                <div class="certifications">
+                    <article class="certification-card">
+                        <div class="credential-mark">
+                            <img src="https://cdn.simpleicons.org/anthropic/1d1d1f" alt="Anthropic logo">
+                        </div>
+                        <div class="certification-content">
+                            <p class="certification-issuer"><strong>Anthropic</strong> · AI Architecture &amp; Generative AI</p>
+                            <h3>Claude Certified Architect – Foundations</h3>
+                            <p class="certification-description">
+                                Professional certification focused on foundational concepts for architecting AI-powered applications and solutions using Claude.
+                            </p>
+                            <p class="certification-skills">
+                                <strong>Relevant Skills:</strong> AI Architecture · Generative AI · Agentic AI · MCP
+                            </p>
+                        </div>
+                        <div class="certification-action">
+                            <a href="https://www.credly.com/badges/310d4094-3443-477e-9868-22efac55bb5a/public_url" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Credential <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -615,13 +752,13 @@
         
                     <!-- Social Links -->
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/s-karim-155019211/" target="_blank" class="social-item">
+                        <a href="https://www.linkedin.com/in/s-karim-155019211/" target="_blank" rel="noopener noreferrer" class="social-item">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" class="icon" width="40px" alt="LinkedIn">
                         </a>
-                        <a href="https://github.com/karimbasha325" target="_blank" class="social-item">
+                        <a href="https://github.com/karimbasha325" target="_blank" rel="noopener noreferrer" class="social-item">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="icon" width="40px" alt="GitHub">
                         </a>
-                        <a href="https://leetcode.com/u/s_karim/" target="_blank" class="social-item">
+                        <a href="https://leetcode.com/u/s_karim/" target="_blank" rel="noopener noreferrer" class="social-item">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/LeetCode_logo_white_no_text.svg" class="icon" width="40px" alt="LeetCode">
                         </a>
                     </div>
