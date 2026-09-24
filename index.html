@@ -149,15 +149,24 @@
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
+        .project-card:hover,
+        .project-card.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.25);
+        }
+
+        .project-card:hover .btn-primary,
+        .project-card.active .btn-primary {
+            background-color: white;
+            color: var(--primary-color);
         }
 
         .project-image {
@@ -394,6 +403,41 @@
             <div class="container">
                 <h2 class="section-title">Projects</h2>
                 <div class="projects">
+                    <div class="project-card active">
+                        <div class="project-info">
+                            <h3>OTC Omega</h3>
+                            <p class="role-duration">
+                                <span>👤 <strong>Role:</strong> Senior Software Engineer</span>  
+                                &nbsp; &nbsp;
+                                <span>🏢 <strong>Company:</strong> EPAM Systems</span>  
+                                &nbsp; &nbsp;
+                                <span>🤝 <strong>Client:</strong> Procter &amp; Gamble</span>  
+                                &nbsp; &nbsp;
+                                <span>📅 <strong>Duration:</strong> Dec 2025 - Present</span>
+                            </p>
+                            <p>
+                                OTC Omega is an enterprise Order-to-Cash platform developed for Procter &amp; Gamble to streamline sales order
+                                processing and operational workflows across multiple business functions and geographies. It centralizes sales order
+                                data, delivery-block management, planning cases, workbasket assignments, and issue resolution while integrating with
+                                SAP and other enterprise systems through an event-driven architecture.
+                            </p>
+                            <div class="project-features">
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Centralized sales order, delivery-block, and issue management.</li>
+                                    <li>Automated planning case creation, prioritization, and workflow processing.</li>
+                                    <li>Rule-based workbasket assignment and user-scope management.</li>
+                                    <li>Event-driven integration with SAP, OTC Hub, and BluePrism.</li>
+                                    <li>GenAI-powered customer communication and email drafting.</li>
+                                </ul>
+                            </div>
+                            <div class="project-tech-stack">
+                                <h4>Tech Stack:</h4>
+                                <p>Python, FastAPI, PostgreSQL, Microsoft SQL Server, SQLAlchemy, GenAI, REST APIs, SAP Integration, Azure Event Hub, Docker, Kubernetes, Alembic, Pytest, Git, GitHub Actions</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="project-card">
                         <!-- <img src="https://via.placeholder.com/400x250" alt="PTW Work Force Management" class="project-image"> -->
                         <div class="project-info">
@@ -585,6 +629,24 @@
             </div>
         </section>        
     </main>
+
+    <script>
+        const projectGrid = document.querySelector('.projects');
+        const projectCards = projectGrid.querySelectorAll('.project-card');
+        const firstProjectCard = projectCards[0];
+
+        projectCards.forEach((card) => {
+            card.addEventListener('mouseenter', () => {
+                projectCards.forEach((projectCard) => projectCard.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+
+        projectGrid.addEventListener('mouseleave', () => {
+            projectCards.forEach((card) => card.classList.remove('active'));
+            firstProjectCard.classList.add('active');
+        });
+    </script>
 
     <!-- <footer class="footer">
         <div class="container">
