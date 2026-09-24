@@ -15,10 +15,18 @@
             --light-gray: #f5f5f7;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-padding-top: 96px;
         }
 
         body {
@@ -78,6 +86,40 @@
 
         .nav-links a:hover {
             color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 9px;
+            border: 1px solid #e5e7eb;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.85);
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            margin: 4px 0;
+            border-radius: 2px;
+            background-color: currentColor;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .menu-toggle[aria-expanded="true"] span:first-child {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle[aria-expanded="true"] span:last-child {
+            transform: translateY(-6px) rotate(-45deg);
         }
 
         .hero {
@@ -149,15 +191,24 @@
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
+        .project-card:hover,
+        .project-card.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.25);
+        }
+
+        .project-card:hover .btn-primary,
+        .project-card.active .btn-primary {
+            background-color: white;
+            color: var(--primary-color);
         }
 
         .project-image {
@@ -288,6 +339,78 @@
             list-style: none;
         }
 
+        .certifications {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .certification-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 32px;
+            background-color: white;
+            border: 1px solid #e5e5e7;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 28px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .certification-card:hover {
+            border-color: rgba(0, 113, 227, 0.35);
+            background-color: #fbfdff;
+            box-shadow: 0 4px 16px rgba(0, 113, 227, 0.1);
+        }
+
+        .credential-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 72px;
+            width: 72px;
+            height: 72px;
+            border: 1px solid #d8d8dc;
+            border-radius: 50%;
+            color: var(--text-color);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .credential-mark img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .certification-content {
+            flex: 1;
+        }
+
+        .certification-content h3 {
+            margin-bottom: 6px;
+            font-size: 1.35rem;
+        }
+
+        .certification-issuer,
+        .certification-type {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .certification-description {
+            margin: 16px 0;
+        }
+
+        .certification-skills {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .certification-action {
+            flex: 0 0 auto;
+        }
+
         .footer {
             background-color: var(--light-gray);
             text-align: center;
@@ -335,6 +458,373 @@
             gap: 4px;
         }
 
+        .project-showcase-section > .container > .section-title,
+        .project-showcase-section .projects {
+            display: none;
+        }
+
+        .project-showcase-section .projects-intro {
+            max-width: 920px;
+            margin: 0 auto 34px;
+        }
+
+        .project-showcase-section {
+            position: relative;
+            z-index: 0;
+            scroll-margin-top: 0;
+            isolation: isolate;
+        }
+
+        .project-showcase-section .projects-kicker {
+            margin-bottom: 12px;
+            color: #7d8798;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .project-showcase-section .projects-heading {
+            margin-bottom: 8px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.04em;
+        }
+
+        .project-showcase-section .projects-subheading {
+            color: #738096;
+            font-size: 1rem;
+        }
+
+        .project-showcase-section .project-showcase {
+            display: grid;
+            grid-template-columns: minmax(230px, 0.78fr) minmax(0, 1.8fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .project-showcase-section .project-timeline {
+            position: sticky;
+            top: 92px;
+            align-self: start;
+            padding: 4px 0;
+        }
+
+        .project-showcase-section .project-timeline::before {
+            content: "";
+            position: absolute;
+            top: 34px;
+            bottom: 34px;
+            left: 30px;
+            width: 1px;
+            background-color: #dce2ea;
+        }
+
+        .project-showcase-section .timeline-item {
+            position: relative;
+            display: grid;
+            grid-template-columns: 42px 1fr auto;
+            gap: 12px;
+            align-items: start;
+            width: 100%;
+            padding: 18px 14px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.25s ease;
+        }
+
+        .project-showcase-section .timeline-item:hover,
+        .project-showcase-section .timeline-item:focus-visible,
+        .project-showcase-section .timeline-item[aria-selected="true"] {
+            background-color: #f4f6f9;
+            outline: none;
+        }
+
+        .project-showcase-section .timeline-dot {
+            position: absolute;
+            top: 25px;
+            left: 26px;
+            width: 9px;
+            height: 9px;
+            border: 1px solid #aab5c4;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9);
+        }
+
+        .project-showcase-section .timeline-item[aria-selected="true"] .timeline-dot {
+            border-color: var(--text-color);
+            background-color: var(--text-color);
+        }
+
+        .project-showcase-section .timeline-copy {
+            grid-column: 2;
+            min-width: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .project-showcase-section .timeline-copy strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.98rem;
+        }
+
+        .project-showcase-section .timeline-copy span,
+        .project-showcase-section .timeline-duration {
+            display: block;
+            color: #738096;
+            font-size: 0.82rem;
+        }
+
+        .project-showcase-section .timeline-category {
+            margin-top: 4px;
+        }
+
+        .project-showcase-section .timeline-duration {
+            grid-column: 3;
+            padding-top: 2px;
+            text-align: right;
+            white-space: nowrap;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .project-showcase-section .project-detail {
+            position: relative;
+            z-index: 0;
+            min-width: 0;
+            padding: 36px 34px 28px;
+            border: 1px solid #edf0f4;
+            border-radius: 13px;
+            background-color: white;
+            box-shadow: 0 12px 30px rgba(28, 40, 60, 0.04);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .project-showcase-section .project-detail.is-changing {
+            opacity: 0.35;
+            transform: translateY(3px);
+        }
+
+        .project-showcase-section .detail-header {
+            position: sticky;
+            top: 92px;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: start;
+            padding-bottom: 24px;
+            background-color: white;
+            box-shadow: 0 10px 14px -14px rgba(28, 40, 60, 0.45);
+        }
+
+        .project-showcase-section .detail-counter {
+            margin-bottom: 16px;
+            color: #8893a4;
+            font-size: 0.82rem;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.08em;
+        }
+
+        .project-showcase-section .detail-title {
+            font-family: inherit;
+            margin-bottom: 10px;
+            font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+            letter-spacing: normal;
+        }
+
+        .project-showcase-section .detail-summary {
+            max-width: 620px;
+            color: #607087;
+            font-size: 0.95rem;
+        }
+
+        .project-showcase-section .detail-navigation {
+            display: flex;
+            gap: 16px;
+        }
+
+        .project-showcase-section .detail-nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border: 1px solid #edf0f4;
+            border-radius: 50%;
+            background-color: #f7f8fa;
+            color: #718096;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .project-showcase-section .detail-nav-button:hover,
+        .project-showcase-section .detail-nav-button:focus-visible {
+            border-color: #cbd4df;
+            background-color: #eef2f7;
+            color: var(--text-color);
+            outline: none;
+        }
+
+        .project-showcase-section .detail-meta,
+        .project-showcase-section .detail-body {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            border-top: 1px solid #edf0f4;
+        }
+
+        .project-showcase-section .detail-meta {
+            padding: 20px 0 22px;
+        }
+
+        .project-showcase-section .detail-meta-block {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 10px;
+            color: #192333;
+            align-items: start;
+        }
+
+        .project-showcase-section .detail-meta-logo {
+            width: 28px;
+            height: 28px;
+            padding: 3px;
+            border: 1px solid #e4e8ee;
+            border-radius: 6px;
+            background-color: #ffffff;
+            object-fit: contain;
+        }
+
+        .project-showcase-section .detail-meta-logo[src*="side-logo"] {
+            border-color: #1d1d1f;
+            background-color: #1d1d1f;
+        }
+
+        .project-showcase-section .detail-meta-block.is-hidden {
+            display: none;
+        }
+
+        .project-showcase-section .detail-meta-block strong,
+        .project-showcase-section .detail-meta-block span,
+        .project-showcase-section .detail-body-section,
+        .project-showcase-section .detail-title,
+        .project-showcase-section .detail-summary {
+            font-family: inherit;
+        }
+
+        .project-showcase-section .detail-meta-block svg {
+            width: 20px;
+            height: 20px;
+            stroke: #7e8a9a;
+            stroke-width: 1.6;
+        }
+
+        .project-showcase-section .detail-meta-block strong,
+        .project-showcase-section .detail-meta-block span {
+            display: block;
+        }
+
+        .project-showcase-section .detail-meta-block strong {
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .project-showcase-section .detail-meta-block span {
+            margin-top: 3px;
+            color: #8b96a6;
+            font-size: 0.75rem;
+        }
+
+        .project-showcase-section .detail-meta-client {
+            color: #607087;
+        }
+
+        .project-showcase-section .detail-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 13px 0;
+            border-top: 1px solid #edf0f4;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .project-showcase-section .tech-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 11px;
+            border: 1px solid #edf0f4;
+            border-radius: 20px;
+            background-color: #fafbfd;
+            color: #354154;
+            font-size: 0.78rem;
+        }
+
+        .project-showcase-section .tech-pill img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+
+        .project-showcase-section .detail-body {
+            grid-template-columns: 1.2fr 1fr;
+            padding-top: 22px;
+        }
+
+        .project-showcase-section .detail-body-section h4 {
+            margin-bottom: 8px;
+            font-size: 0.98rem;
+        }
+
+        .project-showcase-section .detail-body-section p,
+        .project-showcase-section .detail-body-section li {
+            color: #607087;
+            font-size: 0.86rem;
+            line-height: 1.55;
+        }
+
+        .project-showcase-section .detail-body-section ul {
+            display: grid;
+            gap: 9px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .project-showcase-section .detail-body-section li {
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .project-showcase-section .detail-body-section li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #74859b;
+        }
+
+        .project-showcase-section .detail-bottom {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            padding-top: 22px;
+        }
+
+        .project-showcase-section .detail-bottom .detail-body-section {
+            padding-top: 16px;
+            border-top: 1px solid #edf0f4;
+        }
+
+        .project-showcase-section .detail-stack {
+            color: #607087;
+            font-size: 0.86rem;
+            line-height: 1.55;
+        }
+
         @media (max-width: 768px) {
             .hero-content h1 {
                 font-size: 2.5rem;
@@ -342,6 +832,98 @@
 
             .nav-links {
                 display: none;
+                position: absolute;
+                top: calc(100% + 8px);
+                right: 20px;
+                left: 20px;
+                flex-direction: column;
+                gap: 0;
+                padding: 8px;
+                border: 1px solid #e8ebf0;
+                border-radius: 12px;
+                background-color: rgba(255, 255, 255, 0.98);
+                box-shadow: 0 12px 28px rgba(28, 40, 60, 0.12);
+            }
+
+            .nav-links.is-open {
+                display: flex;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px 14px;
+                border-radius: 8px;
+            }
+
+            .nav-links a:hover,
+            .nav-links a:focus-visible {
+                background-color: var(--light-gray);
+                outline: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .project-showcase-section .project-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .project-showcase-section .project-timeline::before {
+                left: 20px;
+            }
+
+            .project-showcase-section .project-timeline {
+                position: relative;
+                top: auto;
+            }
+
+            .project-showcase-section .timeline-item {
+                grid-template-columns: 30px 1fr auto;
+                padding: 15px 12px;
+            }
+
+            .project-showcase-section .timeline-dot {
+                left: 16px;
+                top: 22px;
+            }
+
+            .project-showcase-section .project-detail {
+                padding: 26px 20px 22px;
+            }
+
+            .project-showcase-section .detail-header {
+                top: 92px;
+            }
+
+            .project-showcase-section {
+                scroll-margin-top: 0;
+            }
+
+            .project-showcase-section .detail-header,
+            .project-showcase-section .detail-meta,
+            .project-showcase-section .detail-body,
+            .project-showcase-section .detail-bottom {
+                grid-template-columns: 1fr;
+            }
+
+            .project-showcase-section .detail-navigation {
+                justify-content: flex-end;
+            }
+
+            .certification-card {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 24px;
+            }
+
+            .certification-action {
+                width: 100%;
+            }
+
+            .certification-action .btn {
+                text-align: center;
+                width: 100%;
             }
         }
     </style>
@@ -353,12 +935,18 @@
                 <a href="#" class="logo">
                     <img src="Linkedin_pic.jfif" alt="Logo" class="logo-img">
                 </a>
-                <ul class="nav-links">
+                <ul class="nav-links" id="site-navigation">
                     <li><a href="#about">About</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#skills">Skills</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="site-navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
@@ -390,12 +978,73 @@
             </div>
         </section>        
 
-        <section id="projects" class="section">
+        <section id="projects" class="section project-showcase-section">
             <div class="container">
+                <div class="projects-intro">
+                    <h2 class="projects-heading">Systems that solve real-world problems.</h2>
+                    <p class="projects-subheading">A few of the platforms and products I’ve helped build over the years.</p>
+                </div>
+                <div class="project-showcase">
+                    <div class="project-timeline" role="tablist" aria-label="Projects">
+                        <button class="timeline-item" type="button" role="tab" aria-selected="true" aria-controls="project-detail" data-project-index="0"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-copy"><strong>OTC Omega</strong><span>EPAM Systems</span><span class="timeline-category">Enterprise Platform</span></span><span class="timeline-duration">2025 – Present</span></button>
+                        <button class="timeline-item" type="button" role="tab" aria-selected="false" aria-controls="project-detail" data-project-index="1"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-copy"><strong>Work Force Management</strong><span>Side Inc India</span><span class="timeline-category">Enterprise Platform</span></span><span class="timeline-duration">2023 – 2025</span></button>
+                        <button class="timeline-item" type="button" role="tab" aria-selected="false" aria-controls="project-detail" data-project-index="2"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-copy"><strong>Tijori Finance</strong><span>Tijori Financial Services</span><span class="timeline-category">FinTech Platform</span></span><span class="timeline-duration">2022 – 2023</span></button>
+                        <button class="timeline-item" type="button" role="tab" aria-selected="false" aria-controls="project-detail" data-project-index="3"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-copy"><strong>SITE Postal</strong><span>Saudi Information Technology Company</span><span class="timeline-category">Government / Correspondence</span></span><span class="timeline-duration">2019 – 2021</span></button>
+                    </div>
+                    <article id="project-detail" class="project-detail" aria-live="polite" tabindex="-1">
+                        <header class="detail-header">
+                            <div><p class="detail-counter"><span id="project-current">01</span> / <span id="project-total">04</span></p><h3 class="detail-title" id="project-title">OTC Omega</h3><p class="detail-summary" id="project-summary"></p></div>
+                            <div class="detail-navigation" aria-label="Project navigation"><button class="detail-nav-button" id="project-previous" type="button" aria-label="Previous project">←</button><button class="detail-nav-button" id="project-next" type="button" aria-label="Next project">→</button></div>
+                        </header>
+                        <div class="detail-meta">
+                            <div class="detail-meta-block"><img class="detail-meta-logo" id="project-company-logo" src="assets/companies/epam.svg" alt=""><div><strong id="project-company"></strong><span>Company</span></div></div>
+                            <div class="detail-meta-block is-hidden" id="project-client-block"><img class="detail-meta-logo" id="project-client-logo" src="assets/companies/procter-gamble.png" alt=""><div><strong id="project-client"></strong><span>Client</span></div></div>
+                            <div class="detail-meta-block"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.6-3.2 2.9-5 7-5s6.4 1.8 7 5" stroke-linecap="round"/></svg><div><strong id="project-role"></strong><span>Role</span></div></div>
+                            <div class="detail-meta-block"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7 3v4M17 3v4M3.5 10h17" stroke-linecap="round"/></svg><div><strong id="project-duration"></strong><span>Duration</span></div></div>
+                        </div>
+                        <div class="detail-tech" id="project-tech" aria-label="Technologies"></div>
+                        <div class="detail-body"><section class="detail-body-section"><h4>Project Overview</h4><p id="project-overview"></p></section><section class="detail-body-section"><h4>Key Features</h4><ul id="project-features"></ul></section></div>
+                        <div class="detail-bottom"><section class="detail-body-section"><h4>Technical Contributions</h4><p id="project-contributions"></p></section><section class="detail-body-section"><h4>Tech Stack</h4><p class="detail-stack" id="project-stack"></p></section></div>
+                    </article>
+                </div>
                 <h2 class="section-title">Projects</h2>
                 <div class="projects">
+                    <div class="project-card active">
+                        <div class="project-info">
+                            <h3>OTC Omega</h3>
+                            <p class="role-duration">
+                                <span>👤 <strong>Role:</strong> Senior Software Engineer</span>  
+                                &nbsp; &nbsp;
+                                <span>🏢 <strong>Company:</strong> EPAM Systems</span>  
+                                &nbsp; &nbsp;
+                                <span>🤝 <strong>Client:</strong> Procter &amp; Gamble</span>  
+                                &nbsp; &nbsp;
+                                <span>📅 <strong>Duration:</strong> Dec 2025 - Present</span>
+                            </p>
+                            <p>
+                                OTC Omega is an enterprise Order-to-Cash platform developed for Procter &amp; Gamble to streamline sales order
+                                processing and operational workflows across multiple business functions and geographies. It centralizes sales order
+                                data, delivery-block management, planning cases, workbasket assignments, and issue resolution while integrating with
+                                SAP and other enterprise systems through an event-driven architecture.
+                            </p>
+                            <div class="project-features">
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Centralized sales order, delivery-block, and issue management.</li>
+                                    <li>Automated planning case creation, prioritization, and workflow processing.</li>
+                                    <li>Rule-based workbasket assignment and user-scope management.</li>
+                                    <li>Event-driven integration with SAP, OTC Hub, and BluePrism.</li>
+                                    <li>GenAI-powered customer communication and email drafting.</li>
+                                </ul>
+                            </div>
+                            <div class="project-tech-stack">
+                                <h4>Tech Stack:</h4>
+                                <p>Python, FastAPI, PostgreSQL, Microsoft SQL Server, SQLAlchemy, GenAI, REST APIs, SAP Integration, Azure Event Hub, Docker, Alembic, Pytest, Git, GitHub, GitHub Actions</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="project-card">
-                        <!-- <img src="https://via.placeholder.com/400x250" alt="PTW Work Force Management" class="project-image"> -->
                         <div class="project-info">
                             <h3>Work Force Management</h3>
                             <p class="role-duration">
@@ -421,16 +1070,15 @@
                             </div>
                             <div class="project-tech-stack">
                                 <h4>Tech Stack:</h4>
-                                <p>Python, FastAPI, MySQL, AWS</p>
+                                <p>Python, FastAPI, MySQL, AWS, Bitbucket</p>
                             </div>
                             <div class="project-links">
-                                <a href="https://wfm.ptw.com/" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                                <a href="https://wfm.ptw.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
                             </div>
                         </div>
                     </div>
                     
                     <div class="project-card">
-                        <!-- <img src="/static/img/tijori_logo.jpg" alt="Tijori Finance" class="project-image"> -->
                         <div class="project-info">
                             <h3>Tijori Finance</h3>
                             <p class="role-duration">
@@ -460,13 +1108,12 @@
                                 <p>Python, Django, Django REST Framework, PostgreSQL, Pandas, React, AWS, GitHub</p>
                             </div>
                             <div class="project-links">
-                                <a href="https://www.tijorifinance.com/in/portfolio/" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                                <a href="https://www.tijorifinance.com/in/portfolio/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
                             </div>
                         </div>
                     </div>
                     
                     <div class="project-card">
-                        <!-- <img src="/static/img/site_logo.jpg" alt="SITE Postal" class="project-image"> -->
                         <div class="project-info">
                             <h3>SITE Postal</h3>
                             <p class="role-duration">
@@ -493,10 +1140,10 @@
                             </div>
                             <div class="project-tech-stack">
                                 <h4>Tech Stack:</h4>
-                                <p>Python, Django, PostgreSQL</p>
+                                <p>Python, Django, PostgreSQL, Bitbucket</p>
                             </div>
                             <div class="project-links">
-                                <a href="https://www.site.sa/en/products/site_postal" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                                <a href="https://www.site.sa/en/products/site_postal" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
                             </div>
                         </div>
                     </div>
@@ -556,6 +1203,46 @@
                             <li>Postman</li>
                         </ul>
                     </div>
+                    <div class="skill-category">
+                        <h3>AI Engineering </h3>
+                        <ul class="skill-list">
+                            <li>Generative AI (GenAI)</li>
+                            <li>Agentic AI &amp; AI Agents</li>
+                            <li>Model Context Protocol (MCP)</li>
+                            <li>Retrieval-Augmented Generation (RAG)</li>
+                            <li>Large Language Models (LLMs)</li>
+                            <li>Prompt Engineering</li>
+                            <li>LLM Tool Calling &amp; Function Calling</li>
+                            <li>LangChain</li>
+                            <li>Claude API</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="section">
+            <div class="container">
+                <h2 class="section-title">Certifications</h2>
+                <div class="certifications">
+                    <article class="certification-card">
+                        <div class="credential-mark">
+                            <img src="assets/companies/anthropic.svg" alt="Anthropic logo">
+                        </div>
+                        <div class="certification-content">
+                            <p class="certification-issuer"><strong>Anthropic</strong> · AI Architecture &amp; Generative AI</p>
+                            <h3>Claude Certified Architect – Foundations</h3>
+                            <p class="certification-description">
+                                Professional certification focused on foundational concepts for architecting AI-powered applications and solutions using Claude.
+                            </p>
+                            <p class="certification-skills">
+                                <strong>Relevant Skills:</strong> AI Architecture · Generative AI · Agentic AI · MCP
+                            </p>
+                        </div>
+                        <div class="certification-action">
+                            <a href="https://www.credly.com/badges/310d4094-3443-477e-9868-22efac55bb5a/public_url" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -571,20 +1258,114 @@
         
                     <!-- Social Links -->
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/s-karim-155019211/" target="_blank" class="social-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" class="icon" width="40px" alt="LinkedIn">
+                        <a href="https://www.linkedin.com/in/s-karim-155019211/" target="_blank" rel="noopener noreferrer" class="social-item">
+                            <img src="assets/social/linkedin.svg" class="icon" width="40px" alt="LinkedIn">
                         </a>
-                        <a href="https://github.com/karimbasha325" target="_blank" class="social-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="icon" width="40px" alt="GitHub">
+                        <a href="https://github.com/karimbasha325" target="_blank" rel="noopener noreferrer" class="social-item">
+                            <img src="assets/social/github.svg" class="icon" width="40px" alt="GitHub">
                         </a>
-                        <a href="https://leetcode.com/u/s_karim/" target="_blank" class="social-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/LeetCode_logo_white_no_text.svg" class="icon" width="40px" alt="LeetCode">
+                        <a href="https://leetcode.com/u/s_karim/" target="_blank" rel="noopener noreferrer" class="social-item">
+                            <img src="assets/social/leetcode.svg" class="icon" width="40px" alt="LeetCode">
                         </a>
                     </div>
                 </div>
             </div>
         </section>        
     </main>
+
+    <script>
+        const projectData = [
+            { title: 'OTC Omega', company: 'EPAM Systems', companyLogo: 'assets/companies/epam.svg', client: 'Procter & Gamble', clientLogo: 'assets/companies/procter-gamble.png', role: 'Senior Software Engineer', duration: 'December 2025 – Present', summary: 'An enterprise Order-to-Cash platform that streamlines sales order processing and operational workflows across business functions and geographies.', overview: 'OTC Omega is an enterprise Order-to-Cash platform developed for Procter & Gamble to streamline sales order processing and operational workflows across multiple business functions and geographies. It centralizes sales order data, delivery-block management, planning cases, workbasket assignments, and issue resolution while integrating with SAP and other enterprise systems through an event-driven architecture.', features: ['Centralized sales order, delivery-block, and issue management.', 'Automated planning case creation, prioritization, and workflow processing.', 'Rule-based workbasket assignment and user-scope management.', 'Event-driven integration with SAP, OTC Hub, and BluePrism.', 'GenAI-powered customer communication and email drafting.'], contributions: 'Worked on enterprise order-management workflows, event-driven integrations, API services, and GenAI-powered communication capabilities.', stack: 'Python, FastAPI, PostgreSQL, Microsoft SQL Server, SQLAlchemy, GenAI, REST APIs, SAP Integration, Azure Event Hub, Docker, Alembic, Pytest, Git, GitHub, GitHub Actions', technologies: [['Python', 'assets/tech/python.svg'], ['FastAPI', 'assets/tech/fastapi.svg'], ['PostgreSQL', 'assets/tech/postgresql.svg'], ['Docker', 'assets/tech/docker.svg'], ['GitHub', 'assets/tech/github.svg']] },
+            { title: 'Work Force Management', company: 'Side Inc India', companyLogo: 'assets/side-logo.svg', role: 'Senior Software Engineer', duration: 'July 2023 – December 2025', summary: 'An internal enterprise platform to streamline workforce operations across multiple geographies.', overview: 'WFM (Work Force Management) is an internal enterprise tool used across multiple geographies by Side Inc. It includes sub modules like attendance management, leave management, and daily activity logging. The system streamlines employee workflows and ensures efficient workforce operations.', features: ['Automated attendance and leave tracking.', 'Real-time check-in/check-out system.', 'Employee activity monitoring.', 'Centralized workforce data management.'], contributions: 'Worked on backend development, API architecture, database integration, and enterprise workflow implementation to support scalable workforce operations.', stack: 'Python, FastAPI, MySQL, AWS, Bitbucket', technologies: [['Python', 'assets/tech/python.svg'], ['FastAPI', 'assets/tech/fastapi.svg'], ['MySQL', 'assets/tech/mysql.svg'], ['AWS', 'assets/tech/aws.svg'], ['Bitbucket', 'assets/tech/bitbucket.svg']] },
+            { title: 'Tijori Finance', company: 'Tijori Financial Services', companyLogo: 'assets/companies/tijori.png', role: 'SDE II', duration: 'January 2022 – July 2023', summary: 'A market research platform that turns company and sector data into clearer investment insights.', overview: 'Tijori Finance is a market research platform that provides in-depth data on market share, revenue breakdown, location exposure, shareholding, and financials of companies. It helps long-term investors make informed investment decisions by offering detailed insights into companies and sectors.', features: ['Real-time market data tracking.', 'Company financial & operational metrics.', 'Investment portfolio management.', 'Stock performance analysis.'], contributions: 'Worked across backend services, data processing, API development, and the platform workflows that support market research and portfolio tracking.', stack: 'Python, Django, Django REST Framework, PostgreSQL, Pandas, React, AWS, GitHub', technologies: [['Python', 'assets/tech/python.svg'], ['Django', 'assets/tech/django.svg'], ['PostgreSQL', 'assets/tech/postgresql.svg'], ['Pandas', 'assets/tech/pandas.svg'], ['React', 'assets/tech/react.svg'], ['AWS', 'assets/tech/aws.svg'], ['GitHub', 'assets/tech/github.svg']] },
+            { title: 'SITE Postal', company: 'Saudi Information Technology Company', companyLogo: 'assets/companies/site.png', role: 'Software Engineer', duration: 'November 2019 – December 2021', summary: 'A secure correspondence platform designed around organizational workflows and Saudi standards.', overview: 'SITE Postal is a secure and customizable e-correspondence management system designed to comply with Saudi Arabia’s correspondence standards while seamlessly integrating with an organization\'s workflow. It automates document management to enhance efficiency, improve productivity, and optimize resource utilization while ensuring data security and compliance.', features: ['Secure and encrypted document management.', 'Automated correspondence workflows.', 'Compliance with Saudi Arabia\'s legal standards.', 'Customizable dashboard for user roles.'], contributions: 'Worked on application development, workflow implementation, document management, and the secure delivery of correspondence operations.', stack: 'Python, Django, PostgreSQL, Bitbucket', technologies: [['Python', 'assets/tech/python.svg'], ['Django', 'assets/tech/django.svg'], ['PostgreSQL', 'assets/tech/postgresql.svg'], ['Bitbucket', 'assets/tech/bitbucket.svg']] }
+        ];
+
+        const timelineItems = [...document.querySelectorAll('.project-showcase-section .timeline-item')];
+        const detail = document.querySelector('#project-detail');
+        const fields = { current: document.querySelector('#project-current'), title: document.querySelector('#project-title'), summary: document.querySelector('#project-summary'), company: document.querySelector('#project-company'), companyLogo: document.querySelector('#project-company-logo'), client: document.querySelector('#project-client'), clientLogo: document.querySelector('#project-client-logo'), clientBlock: document.querySelector('#project-client-block'), role: document.querySelector('#project-role'), duration: document.querySelector('#project-duration'), tech: document.querySelector('#project-tech'), overview: document.querySelector('#project-overview'), features: document.querySelector('#project-features'), contributions: document.querySelector('#project-contributions'), stack: document.querySelector('#project-stack') };
+        let activeProjectIndex = 0;
+
+        function renderTechnology([name, icon]) {
+            const pill = document.createElement('span');
+            pill.className = 'tech-pill';
+            pill.innerHTML = `<img src="${icon}" alt=""><span>${name}</span>`;
+            return pill;
+        }
+
+        function setCompanyLogo(image, source, label) {
+            image.onerror = () => {
+                image.onerror = null;
+                image.src = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#f1f3f6"/><text x="16" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#657286">${label.slice(0, 3).toUpperCase()}</text></svg>`)}`;
+            };
+            image.src = source || '';
+        }
+
+        function selectProject(index, moveFocus = false) {
+            const project = projectData[index];
+            activeProjectIndex = index;
+            fields.current.textContent = String(index + 1).padStart(2, '0');
+            fields.title.textContent = project.title;
+            fields.summary.textContent = project.summary;
+            fields.company.textContent = project.company;
+            setCompanyLogo(fields.companyLogo, project.companyLogo, project.company);
+            fields.companyLogo.alt = `${project.company} logo`;
+            fields.client.textContent = project.client || '';
+            fields.clientBlock.classList.toggle('is-hidden', !project.client);
+            if (project.client) {
+                setCompanyLogo(fields.clientLogo, project.clientLogo, project.client);
+                fields.clientLogo.alt = `${project.client} logo`;
+            } else {
+                fields.clientLogo.alt = '';
+            }
+            fields.role.textContent = project.role;
+            fields.duration.textContent = project.duration;
+            fields.overview.textContent = project.overview;
+            fields.contributions.textContent = project.contributions;
+            fields.stack.textContent = project.stack;
+            fields.tech.replaceChildren(...project.technologies.map(renderTechnology));
+            fields.features.replaceChildren(...project.features.map((feature) => { const item = document.createElement('li'); item.textContent = feature; return item; }));
+            timelineItems.forEach((item, itemIndex) => item.setAttribute('aria-selected', String(itemIndex === index)));
+            if (moveFocus) detail.focus({ preventScroll: true });
+        }
+
+        timelineItems.forEach((item, index) => {
+            item.addEventListener('click', () => selectProject(index));
+            item.addEventListener('keydown', (event) => {
+                if (event.key !== 'ArrowDown' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowLeft') return;
+                event.preventDefault();
+                const direction = event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : -1;
+                const nextIndex = (index + direction + projectData.length) % projectData.length;
+                timelineItems[nextIndex].focus();
+                selectProject(nextIndex);
+            });
+        });
+
+        document.querySelector('#project-previous').addEventListener('click', () => selectProject((activeProjectIndex - 1 + projectData.length) % projectData.length, true));
+        document.querySelector('#project-next').addEventListener('click', () => selectProject((activeProjectIndex + 1) % projectData.length, true));
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteNavigation = document.querySelector('#site-navigation');
+
+        function closeMobileMenu() {
+            siteNavigation.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open navigation menu');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = siteNavigation.classList.toggle('is-open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        });
+
+        siteNavigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMobileMenu));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeMobileMenu();
+        });
+
+        selectProject(0);
+    </script>
 
     <!-- <footer class="footer">
         <div class="container">
