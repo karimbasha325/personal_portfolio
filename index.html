@@ -26,7 +26,8 @@
         }
 
         html {
-            scroll-padding-top: 96px;
+            /* Navbar height minus the 80px section padding, plus a small breathing gap */
+            scroll-padding-top: 36px;
         }
 
         body {
@@ -629,6 +630,12 @@
             letter-spacing: 0.08em;
         }
 
+        /* Desktop shows the category in the timeline; mobile pills hide it, so it moves here */
+        .project-showcase-section .detail-category {
+            display: none;
+            letter-spacing: normal;
+        }
+
         .project-showcase-section .detail-title {
             font-family: inherit;
             margin-bottom: 10px;
@@ -869,23 +876,63 @@
                 grid-template-columns: 1fr;
             }
 
-            .project-showcase-section .project-timeline::before {
-                left: 20px;
+            .project-showcase-section .project-timeline::before,
+            .project-showcase-section .timeline-dot {
+                display: none;
             }
 
             .project-showcase-section .project-timeline {
                 position: relative;
                 top: auto;
+                display: flex;
+                gap: 8px;
+                margin: 0 -20px;
+                padding: 2px 20px 6px;
+                overflow-x: auto;
+                scroll-snap-type: x proximity;
+                scroll-padding-inline: 20px;
+                scrollbar-width: none;
+            }
+
+            .project-showcase-section .project-timeline::-webkit-scrollbar {
+                display: none;
             }
 
             .project-showcase-section .timeline-item {
-                grid-template-columns: 30px 1fr auto;
-                padding: 15px 12px;
+                flex: 0 0 auto;
+                display: block;
+                width: auto;
+                padding: 9px 16px;
+                border: 1px solid #e4e8ee;
+                border-radius: 999px;
+                background-color: white;
+                scroll-snap-align: start;
             }
 
-            .project-showcase-section .timeline-dot {
-                left: 16px;
-                top: 22px;
+            .project-showcase-section .timeline-item:hover {
+                background-color: #f4f6f9;
+            }
+
+            .project-showcase-section .timeline-item[aria-selected="true"] {
+                border-color: var(--text-color);
+                background-color: var(--text-color);
+                color: white;
+            }
+
+            .project-showcase-section .timeline-copy strong {
+                margin: 0;
+                font-size: 0.88rem;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+            .project-showcase-section .timeline-copy span,
+            .project-showcase-section .timeline-duration {
+                display: none;
+            }
+
+            .project-showcase-section .detail-category {
+                display: inline;
             }
 
             .project-showcase-section .project-detail {
@@ -908,7 +955,19 @@
             }
 
             .project-showcase-section .detail-navigation {
-                justify-content: flex-end;
+                position: absolute;
+                top: -8px;
+                right: 0;
+                gap: 10px;
+            }
+
+            .project-showcase-section .detail-counter {
+                padding-right: 90px;
+            }
+
+            .project-showcase-section .detail-nav-button {
+                width: 36px;
+                height: 36px;
             }
 
             .certification-card {
@@ -995,7 +1054,7 @@
                     </div>
                     <article id="project-detail" class="project-detail" aria-live="polite" tabindex="-1">
                         <header class="detail-header">
-                            <div><p class="detail-counter"><span id="project-current">01</span> / <span id="project-total">04</span></p><h3 class="detail-title" id="project-title">OTC Omega</h3><p class="detail-summary" id="project-summary"></p></div>
+                            <div><p class="detail-counter"><span id="project-current">01</span> / <span id="project-total">04</span><span class="detail-category"> · <span id="project-category">Enterprise Platform</span></span></p><h3 class="detail-title" id="project-title">OTC Omega</h3><p class="detail-summary" id="project-summary"></p></div>
                             <div class="detail-navigation" aria-label="Project navigation"><button class="detail-nav-button" id="project-previous" type="button" aria-label="Previous project">←</button><button class="detail-nav-button" id="project-next" type="button" aria-label="Next project">→</button></div>
                         </header>
                         <div class="detail-meta">
@@ -1307,6 +1366,7 @@
             const project = projectData[index];
             activeProjectIndex = index;
             fields.current.textContent = String(index + 1).padStart(2, '0');
+            document.querySelector('#project-category').textContent = timelineItems[index].querySelector('.timeline-category').textContent;
             fields.title.textContent = project.title;
             fields.summary.textContent = project.summary;
             fields.company.textContent = project.company;
@@ -1328,6 +1388,10 @@
             fields.tech.replaceChildren(...project.technologies.map(renderTechnology));
             fields.features.replaceChildren(...project.features.map((feature) => { const item = document.createElement('li'); item.textContent = feature; return item; }));
             timelineItems.forEach((item, itemIndex) => item.setAttribute('aria-selected', String(itemIndex === index)));
+            const timeline = timelineItems[index].parentElement;
+            if (timeline.scrollWidth > timeline.clientWidth) {
+                timeline.scrollTo({ left: timelineItems[index].offsetLeft - 20, behavior: 'smooth' });
+            }
             if (moveFocus) detail.focus({ preventScroll: true });
         }
 
